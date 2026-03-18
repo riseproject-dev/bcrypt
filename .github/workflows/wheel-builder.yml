@@ -141,8 +141,10 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-dev python3-venv python3-pip patchelf rustc cargo libffi-dev
-      - run: python3 -m venv .venv
+          sudo apt-get install -y patchelf libffi-dev
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - run: /opt/python-3.12/bin/python3.12 -m venv .venv
       - name: Install python dependencies
         run: .venv/bin/pip install -U pip wheel setuptools-rust auditwheel
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
