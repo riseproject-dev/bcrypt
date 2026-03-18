@@ -144,6 +144,15 @@ jobs:
           sudo apt-get install -y patchelf libffi-dev
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Cache Rust artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: bcrypt-riscv64-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            bcrypt-riscv64-cargo-
       - run: /opt/python-3.12/bin/python3.12 -m venv .venv
       - name: Install python dependencies
         run: .venv/bin/pip install -U pip wheel setuptools-rust auditwheel
