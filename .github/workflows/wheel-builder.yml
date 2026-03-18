@@ -154,7 +154,7 @@ jobs:
       - name: Build the wheel
         run: |
           .venv/bin/python -m pip wheel -v bcrypt*.tar.gz -w dist/ && mv dist/bcrypt*.whl tmpwheelhouse
-      - run: auditwheel repair tmpwheelhouse/bcrypt*.whl -w wheelhouse/
+      - run: .venv/bin/auditwheel repair tmpwheelhouse/bcrypt*.whl -w wheelhouse/
       - run: .venv/bin/pip install bcrypt --no-index -f wheelhouse/
       - run: |
           .venv/bin/python -c "import bcrypt; password = b'super secret password';hashed = bcrypt.hashpw(password, bcrypt.gensalt());bcrypt.checkpw(password, hashed)"
